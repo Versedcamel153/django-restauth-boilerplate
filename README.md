@@ -1,11 +1,11 @@
 # Django REST Auth Boilerplate
-This is a reusable Django app for REST API endpoints for user authentication and account management. It uses `dj-rest-auth` and `django-allauth` under the hood, with built in support for Google Login. 
+This is a reusable Django app for REST API endpoints for user authentication and account management. It uses [dj-rest-auth](https://dj-rest-auth.readthedocs.io/en/latest/) and [django-allauth](https://docs.allauth.org/en/latest/) under the hood, with built in support for Google Login. 
 
 What makes it different? This boilerplate comes pre-configured and simplified:
 - It uses **email & password** for login instead of the default **username & password**
 - Local account created with email & password are **automatically linked** when logged in with a google account with the same email
 - Optional **JWT authentication** is the used instead of the default **token authentication**
-    You can switch back to token authentication by setting [`USE_JWT`](#setup) to `False`
+    You can switch back to token authentication by setting [USE_JWT](#setup) to `False`
 
 ## Features
 
@@ -93,7 +93,9 @@ Then go to the Django admin panel and:
 1. Navigate to **Social Applications** (provided by `django-allauth`)
 2. Add a new application with:
     - **Provider**: Google
-    - **Client ID** and **Secret** from your Google Developer Console
+    - **Client ID** and **Secret** from your Google Developer Console.
+    Refer to this page on how to obtain google OAuth2 credentials [🔗](https://docs.allauth.org/en/dev/socialaccount/providers/google.html)
+
     - **Sites**: Select your site (eg., `example.com` or `localhost`)
 
     This would enable Google OAuth2 login for your API.
