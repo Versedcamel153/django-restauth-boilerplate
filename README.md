@@ -1,14 +1,20 @@
 # Django REST Auth Boilerplate
-This is a reusable Django app for REST API endpoints for user authentication and account management. It uses `dj-rest-auth` and `django-allauth` under the hood, with built in support for Google Login.
+This is a reusable Django app for REST API endpoints for user authentication and account management. It uses `dj-rest-auth` and `django-allauth` under the hood, with built in support for Google Login. 
+
+What makes it different? This boilerplate comes pre-configured and simplified:
+- It uses **email & password** for login instead of the default **username & password**
+- Local account created with email & password are **automatically linked** when logged in with a google account with the same email
+- Optional **JWT authentication** is the used instead of the default **token authentication**
+    You can switch back to token authentication by setting [`USE_JWT`](#setup) to `False`
 
 ## Features
 
-- User Registreation
+- User Registration
 - Email/password login
 - Google social login
 - Logout
 - Password reset and password change
-- Built on top of `django-rest-auth` and `django-allauth`
+- Built on top of `dj-rest-auth` and `django-allauth`
 
 ## Installation
 ```bash
@@ -32,7 +38,7 @@ INSTALLED_APPS = [
         'allauth.socialaccount',
         'allauth.socialaccount.providers.google',
         'dj_rest_auth',
-        'dj_Rest_auth.registration',
+        'dj_rest_auth.registration',
         'backendAuth', #this app
 ]
 
@@ -50,6 +56,7 @@ REST_FRAMEWORK = {
 }
 
 REST_AUTH = {
+    ## Optional: JWT Authentication
     'USE_JWT': True,
     'JWT_AUTH_COOKIE': 'access_token',
     'JWT_AUTH_REFRESH_COOKIE': 'refresh_token',
@@ -65,6 +72,7 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'username', 'password1*', 'password2*']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_LOGIN_METHODS = {"email"}  # Use email for authentication
+
 ```
 And in your ``urls.py`` :
 ```Python
@@ -77,15 +85,15 @@ urlpatterns = [
 ```
 
 ## Google Login Setup
-To enable Google Login, add this to settings:
+To enable Google Login, add this to `settings.py`:
 ```Python
 CALLBACK_URL = 'http://127.0.0.1:8000/api/v1/auth/google/' #Should match the 'Authorized redirect URIs' set on your Google Cloud Console
 ```
 Then go to the Django admin panel and:
 1. Navigate to **Social Applications** (provided by `django-allauth`)
 2. Add a new application with:
-- **Provider**: Google
-- **Client ID** and **Secret** from your Google Developer Console
-- **Sites**: Select your site (eg., `example.com` or `localhost`)
+    - **Provider**: Google
+    - **Client ID** and **Secret** from your Google Developer Console
+    - **Sites**: Select your site (eg., `example.com` or `localhost`)
 
-This would enable Google OAuth2 login for your API.
+    This would enable Google OAuth2 login for your API.
